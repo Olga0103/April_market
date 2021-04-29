@@ -42,5 +42,6 @@ public class ProductController {
     public Product updateProductById(@RequestBody Product product){
         return productService.updateById(product);
     }
+    
 
 }
