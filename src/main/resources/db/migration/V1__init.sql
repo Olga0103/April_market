@@ -5,3 +5,8 @@ insert into products (title, price) values
 ('Pineapple', 350),
 ('Pear', 112),
 ('Orange', 99);
+
+
+-- create table cartproducts (title varchar(255), price int);
+-- insert into cartproducts (title, price) values
+--
