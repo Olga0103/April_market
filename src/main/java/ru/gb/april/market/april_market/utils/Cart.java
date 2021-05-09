@@ -6,9 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.gb.april.market.april_market.models.Product;
 import ru.gb.april.market.april_market.services.ProductService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Component
@@ -36,5 +34,16 @@ public class Cart {
     }
 
 
+    public Long getId() {
 
+        return getId();
+    }
+
+    public int getCartPrice() {
+        return 0;
+    }
+
+    public Arrays getCartItems() {
+        return null;
+    }
 }
