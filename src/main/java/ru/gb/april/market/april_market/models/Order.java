@@ -3,32 +3,34 @@ package ru.gb.april.market.april_market.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.gb.april.market.april_market.utils.Cart;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "products")
-@NoArgsConstructor
 @Data
-public class Product {
+@NoArgsConstructor
+@Table(name = "orders")
+public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "price")
-    private BigDecimal price;
-
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "user")
+    private User user;
+
+    @OneToMany(mappedBy = "order")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<OrderItem> orderItems;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -37,4 +39,11 @@ public class Product {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
+    public Order(Cart cart, User user) {
+        this.user = user;
+        this.orderItems = new ArrayList<>();
+
+    }
 }

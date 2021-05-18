@@ -4,18 +4,17 @@ import lombok.Data;
 import ru.gb.april.market.april_market.utils.Cart;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
 public class CartDto {
-    private Long id;
-    private List<CartItemDto> cartItems;
-    private int cartPrice;
+    private List<OrderItemDto> items;
+    private BigDecimal sum;
 
     public CartDto(Cart cart) {
-        this.id = cart.getId();
-        this.cartPrice = cart.getCartPrice();
-        this.cartItems = (List<CartItemDto>) cart.getCartItems();
+        this.items = cart.getItems().stream().map(OrderItemDto::new).collect(Collectors.toList());
+        this.sum = cart.getSum();
     }
 }
