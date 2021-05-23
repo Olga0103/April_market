@@ -33,8 +33,11 @@ public class Order {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<OrderItem> orderItems;
 
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "totalPrice")
+    private BigDecimal totalPrice;
+
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -45,9 +48,12 @@ public class Order {
     private LocalDateTime updatedAt;
 
 
-//    public Order(Cart cart, User user) {
-//        this.user = user;
-//        this.orderItems = new ArrayList<>();
-//
-//    }
+    public Order(Cart cart, User user, String address) {
+        this.user = user;
+        this.orderItems = new ArrayList<>();
+        this.totalPrice = cart.getSum();
+        this.address = address;
+
+
+    }
 }

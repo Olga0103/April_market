@@ -25,7 +25,7 @@ public class OrderService {
     public Order createOrderForCurrentUser(User user) {
         Order order = new Order();
         order.setUser(user);
-        order.setPrice(cart.getSum());
+        order.setTotalPrice(cart.getSum());
         order.setOrderItems(cart.getItems());
         for (OrderItem oi : cart.getItems()) {
             oi.setOrder(order);
