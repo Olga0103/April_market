@@ -25,6 +25,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+
+    @Transactional
+    public void save(String username, String password, String email) {
+        userRepository.save(new User(username, password, email));
+    }
+
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,4 +42,6 @@ public class UserService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
+
 }

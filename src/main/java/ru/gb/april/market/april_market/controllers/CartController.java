@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.april.market.april_market.dto.CartDto;
 import ru.gb.april.market.april_market.utils.Cart;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 @RestController
 @RequestMapping("/api/v1/cart")

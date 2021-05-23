@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import ru.gb.april.market.april_market.utils.Cart;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,9 @@ public class Order {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<OrderItem> orderItems;
 
+    @Column(name = "price")
+    private BigDecimal price;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -41,9 +45,9 @@ public class Order {
     private LocalDateTime updatedAt;
 
 
-    public Order(Cart cart, User user) {
-        this.user = user;
-        this.orderItems = new ArrayList<>();
-
-    }
+//    public Order(Cart cart, User user) {
+//        this.user = user;
+//        this.orderItems = new ArrayList<>();
+//
+//    }
 }

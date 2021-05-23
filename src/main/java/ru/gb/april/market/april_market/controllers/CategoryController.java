@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
+
 import ru.gb.april.market.april_market.error_handlings.ResourceNotFoundException;
 import ru.gb.april.market.april_market.models.Category;
 import ru.gb.april.market.april_market.services.CategoryService;
