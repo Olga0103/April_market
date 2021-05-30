@@ -3,6 +3,7 @@ package ru.gb.april.market.april_market.models;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Table(name = "users")
+@Scope("session")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,4 +49,7 @@ public class User {
     }
 
 
+    public User() {
+
+    }
 }

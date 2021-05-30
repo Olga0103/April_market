@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Deprecated
 public class AppTest {
     private long userServiceTotalDuration;
     private long orderServiceTotalDuration;
