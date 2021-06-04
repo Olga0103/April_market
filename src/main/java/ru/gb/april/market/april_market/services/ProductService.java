@@ -11,9 +11,12 @@ import ru.gb.april.market.april_market.dto.ProductDto;
 import ru.gb.april.market.april_market.error_handlings.ResourceNotFoundException;
 import ru.gb.april.market.april_market.models.Category;
 import ru.gb.april.market.april_market.models.Product;
+import ru.gb.april.market.april_market.models.ProductSOAP;
 import ru.gb.april.market.april_market.repositories.ProductRepository;
 
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,5 +60,23 @@ public class ProductService {
 
     public void deleteById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public static final Function<ProductSOAP, ProductSOAP> functionEntityToSoap = se -> {
+        ProductSOAP p = new ProductSOAP();
+        p.setId(se.getId());
+        p.setName(se.getName());
+        p.setPrice(se.getPrice());
+        return p;
+    };
+
+    public ProductSOAP findByTitleSoap(String name) {
+        return productRepository.findByName(name).map(functionEntityToSoap).get();
+    }
+
+    public Page<ProductSOAP> getAllProductsSOAP() {
+
+        return productRepository.findAll().stream().map(functionEntityToSoap).
+                collect(Collectors.toList());;
     }
 }
