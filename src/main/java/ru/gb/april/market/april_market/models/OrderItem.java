@@ -43,16 +43,13 @@ public class OrderItem {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+//
+//    public OrderItem(Product product) {
+//        this.product = product;
+//        this.quantity = 1;
+//        this.pricePerProduct = product.getPrice();
+//        this.price = product.getPrice();
+//    }
 
-    public OrderItem(Product product) {
-        this.product = product;
-        this.quantity = 1;
-        this.pricePerProduct = product.getPrice();
-        this.price = product.getPrice();
-    }
 
-    public void incrementQuantity() {
-        this.quantity++;
-        this.price = this.pricePerProduct.multiply(new BigDecimal(this.quantity));
-    }
 }

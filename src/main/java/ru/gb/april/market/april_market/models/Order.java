@@ -26,15 +26,15 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "order")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> items;
 
-    @Column(name = "totalPrice")
-    private BigDecimal totalPrice;
+    @Column(name = "price")
+    private BigDecimal price;
 
     @Column(name = "address")
     private String address;
@@ -50,8 +50,8 @@ public class Order {
 
     public Order(Cart cart, User user, String address) {
         this.user = user;
-        this.orderItems = new ArrayList<>();
-        this.totalPrice = cart.getSum();
+        this.items = new ArrayList<>();
+        this.price = cart.getSum();
         this.address = address;
 
 

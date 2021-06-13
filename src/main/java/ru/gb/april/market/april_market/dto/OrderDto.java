@@ -18,8 +18,10 @@ public class OrderDto {
 
     public OrderDto(Order order) {
         this.id = order.getId();
-        this.price = order.getTotalPrice();
-        this.description = order.getOrderItems().stream().map(o -> o.getProduct().getTitle() + " x" + o.getQuantity()).collect(Collectors.joining(", "));
+        this.price = order.getPrice();
+        this.description = order.getItems().stream().map(o -> o.getProduct().getTitle() + " x" + o.getQuantity()).collect(Collectors.joining(", "));
         this.address = order.getAddress();
     }
+
+
 }

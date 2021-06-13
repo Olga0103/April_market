@@ -12,7 +12,6 @@ import java.util.Collection;
 @Entity
 @Data
 @Table(name = "users")
-@Scope("session")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +41,10 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email =email;
-    }
 
+    public User(String username, String password, String email) {
+
+    }
 
     public User() {
 

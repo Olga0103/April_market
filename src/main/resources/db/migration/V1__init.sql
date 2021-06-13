@@ -27,8 +27,8 @@ values
 
 insert into users (username, password, email)
 values
-('user', '$2y$12$4g1SOm4vGFSF/CbT84nOzOyygKSuTtRshecj7HYOCC1xUPjhkVPWG', 'bob_johnson@gmail.com'),
-('admin', '$2y$12$4g1SOm4vGFSF/CbT84nOzOyygKSuTtRshecj7HYOCC1xUPjhkVPWG', 'john_johnson@gmail.com');
+('user', '93hf2938hf948hf948hf984ht89h439th849rh849rh439r8h4389h4fn94f', 'bob_johnson@gmail.com'),
+('admin', '93hf2938hf948hf948hf984ht89h439th849rh849rh439r8h4389h4fn94f', 'john_johnson@gmail.com');
 
 insert into users_roles (user_id, role_id)
 values
@@ -38,8 +38,8 @@ values
 create table categories (
                             id           bigserial primary key,
                             title        varchar(255),
-                            created_at                      timestamp default current_timestamp,
-                            updated_at                      timestamp default current_timestamp
+                            created_at   timestamp default current_timestamp,
+                            updated_at   timestamp default current_timestamp
 );
 
 insert into categories (title)
@@ -50,9 +50,9 @@ create table products (
                           id           bigserial primary key,
                           title        varchar(255),
                           price        numeric (8, 2),
-                          category_id                     bigint references categories (id),
-                          created_at                      timestamp default current_timestamp,
-                          updated_at                      timestamp default current_timestamp
+                          category_id  bigint references categories (id),
+                          created_at   timestamp default current_timestamp,
+                          updated_at   timestamp default current_timestamp
 );
 
 
@@ -76,23 +76,15 @@ create table orders (
 
 
 create table order_items (
-                             id           bigserial primary key,
-                             product_id                      bigint references products (id),
-                             quantity     int,
-                             price_per_product               numeric (8, 2),
-                             price        numeric (8, 2),
-                             created_at                      timestamp default current_timestamp,
-                             updated_at                      timestamp default current_timestamp
+                             id                      bigserial primary key,
+                             order_id                bigint references orders (id),
+                             product_id              bigint references products (id),
+                             quantity                int,
+                             price_per_product       numeric (8, 2),
+                             price                   numeric (8, 2),
+                             created_at              timestamp default current_timestamp,
+                             updated_at              timestamp default current_timestamp
 );
 
 
 
-
-
-create table productsoap (id bigserial primary key, title varchar(255),
-                          price integer);
-insert into product_soap (title, price, category_soap_id)
-values
-('Apple', 56, 1),
-('Mango', 120, 1),
-('Orange', 75, 1);

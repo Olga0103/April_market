@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngStorage'])
+        .module('app', ['ngRoute', 'ngStorage', 'ngCookies'])
         .config(config)
         .run(run);
 
@@ -32,10 +32,14 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $http, $localStorage, $location) {
+angular.module('app').controller('indexController', function ($scope, $http, $localStorage, $location, $cookies) {
     const contextPath = 'http://localhost:8189/market';
 
     $scope.tryToAuth = function () {
+        // if ($scope.username.length < 2) {
+        //     alert('error');
+        //     return;
+        // }
         $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
@@ -67,6 +71,8 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
 
     $scope.tryToLogout = function () {
         $scope.clearUser();
+        $cookies.remove('SESSION');
+        $cookies.put('abc', 'cde');
     };
 
     $scope.clearUser = function () {
