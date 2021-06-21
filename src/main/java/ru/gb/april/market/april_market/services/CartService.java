@@ -24,6 +24,16 @@ public class CartService {
         save(cartId, cart);
     }
 
+    public void decrementProduct(String cartId, Long productId) {
+        Cart cart = getCurrentCart(cartId);
+        cart.decrementProduct(productId);
+        save(cartId, cart);
+    }
+
+    public boolean isCartExists(String cartId) {
+        return redisTemplate.hasKey("april_cart_" + cartId);
+    }
+
     public Cart getCurrentCart(String cartId) {
         if (!redisTemplate.hasKey("april_cart_" + cartId)) {
             redisTemplate.opsForValue().set("april_cart_" + cartId, new Cart());
@@ -40,6 +50,13 @@ public class CartService {
         Cart cart = getCurrentCart(cartId);
         cart.clear();
         save(cartId, cart);
+    }
+    public void merge(String userCartId, String guestCartId) {
+        Cart userCart = getCurrentCart(userCartId);
+        Cart guestCart = getCurrentCart(guestCartId);
+        userCart.merge(guestCart);
+        save(userCartId, userCart);
+        save(guestCartId, guestCart);
     }
 
 

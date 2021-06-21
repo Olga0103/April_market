@@ -30,6 +30,20 @@ public class Cart {
         return false;
     }
 
+    public void decrementProduct(Long id) {
+        Iterator<OrderItemDto> iter = items.iterator();
+        while (iter.hasNext()) {
+            OrderItemDto o = iter.next();
+            if (o.getProductId().equals(id)) {
+                o.changeQuantity(-1);
+                if (o.getQuantity() <= 0) {
+                    iter.remove();
+                }
+                recalculate();
+                return;
+            }
+        }
+    }
     public void addToCart(Product product) {
         items.add(new OrderItemDto(product));
         recalculate();
@@ -40,13 +54,30 @@ public class Cart {
         recalculate();
     }
 
-    public void recalculate() { //todo изменить на private после теста
+    public void recalculate() {
         sum = BigDecimal.ZERO;
         for (OrderItemDto o : items) {
             sum = sum.add(o.getPrice());
         }
     }
 
+    public void merge(Cart another) {
+        for (OrderItemDto anotherItem : another.items) {
+            boolean merged = false;
+            for (OrderItemDto myItem : items) {
+                if (myItem.getProductId().equals(anotherItem.getProductId())) {
+                    myItem.changeQuantity(anotherItem.getQuantity());
+                    merged = true;
+                    break;
+                }
+            }
+            if (!merged) {
+                items.add(anotherItem);
+            }
+        }
+        recalculate();
+        another.clear();
+    }
 
     public BigDecimal getCartPrice() {
 

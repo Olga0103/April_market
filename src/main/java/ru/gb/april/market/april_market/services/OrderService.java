@@ -28,9 +28,8 @@ public class OrderService {
     public Order createOrderForCurrentUser(User user) {
         Order order = new Order();
         order.setUser(user);
-        Cart cart = cartService.getCurrentCart("cart"); // todo ERROR
+        Cart cart = cartService.getCurrentCart(user.getUsername());
         order.setPrice(cart.getSum());
-        // todo распутать этот кусок
         order.setItems(new ArrayList<>());
         for (OrderItemDto o : cart.getItems()) {
             OrderItem orderItem = new OrderItem();
@@ -43,7 +42,7 @@ public class OrderService {
         }
         order = orderRepository.save(order);
         cart.clear();
-        cartService.save("cart", cart); // todo ERROR
+        cartService.save(user.getUsername(), cart);
         return order;
     }
 }

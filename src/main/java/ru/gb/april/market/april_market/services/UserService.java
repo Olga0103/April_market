@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void save(String username, String password, String email) {
-        userRepository.save(new User(username, password, email));
+        userRepository.save(new User());
     }
 
 
