@@ -86,3 +86,13 @@ create table order_items (
 );
 
 
+
+
+
+create table productsoap (id bigserial primary key, title varchar(255),
+                          price integer);
+insert into product_soap (title, price, category_soap_id)
+values
+('Apple', 56, 1),
+('Mango', 120, 1),
+('Orange', 75, 1);
