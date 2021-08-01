@@ -1,6 +1,7 @@
 package ru.gb.april.market.april_market.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.context.annotation.Scope;
@@ -12,7 +13,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Table(name = "users")
-@Scope("session")
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,14 +43,4 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email =email;
-    }
-
-
-    public User() {
-
-    }
 }

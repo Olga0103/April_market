@@ -44,15 +44,4 @@ public class OrderItem {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public OrderItem(Product product) {
-        this.product = product;
-        this.quantity = 1;
-        this.pricePerProduct = product.getPrice();
-        this.price = product.getPrice();
-    }
-
-    public void incrementQuantity() {
-        this.quantity++;
-        this.price = this.pricePerProduct.multiply(new BigDecimal(this.quantity));
-    }
 }

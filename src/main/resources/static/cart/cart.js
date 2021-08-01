@@ -4,7 +4,10 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     $scope.loadCart = function (page) {
         $http({
             url: contextPath + '/api/v1/cart',
-            method: 'GET'
+            method: 'GET',
+            params: {
+                cartName: $localStorage.aprilCartId
+            }
         }).then(function (response) {
             $scope.cartDto = response.data;
         });
@@ -13,7 +16,10 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     $scope.clearCart = function () {
         $http({
             url: contextPath + '/api/v1/cart/clear',
-            method: 'GET'
+            method: 'GET',
+            params: {
+                cartName: $localStorage.aprilCartId
+            }
         }).then(function (response) {
             $scope.loadCart();
         });
@@ -35,6 +41,32 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
             $scope.loadCart();
         });
     };
+
+    $scope.decrementProduct = function (productId) {
+        $http({
+            url: contextPath + '/api/v1/cart/dec/',
+            method: 'GET',
+            params: {
+                prodId: productId,
+                cartName: $localStorage.aprilCartId
+            }
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
+
+    $scope.addToCart = function (productId) {
+        $http({
+            url: contextPath + '/api/v1/cart/add/',
+            method: 'GET',
+            params: {
+                prodId: productId,
+                cartName: $localStorage.aprilCartId
+            }
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
 
     $scope.loadCart();
 });
