@@ -2,6 +2,7 @@ package ru.gb.april.market.april_market.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.april.market.april_market.dto.CartDto;
 import ru.gb.april.market.april_market.utils.Cart;
@@ -12,6 +13,7 @@ import ru.gb.april.market.april_market.utils.Cart;
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 @Slf4j
+@Scope("session")
 public class CartController {
     private final Cart cart;
 

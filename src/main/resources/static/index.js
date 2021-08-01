@@ -1,53 +1,84 @@
-angular.module('app', []).controller('indexController', function ($scope, $http) {
+(function ($localStorage) {
+    'use strict';
+
+    angular
+        .module('app', ['ngRoute', 'ngStorage'])
+        .config(config)
+        .run(run);
+
+    function config($routeProvider, $httpProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'home/home.html',
+                controller: 'homeController'
+            })
+            .when('/products', {
+                templateUrl: 'products/products.html',
+                controller: 'productsController'
+            })
+            .when('/cart', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+    }
+
+    function run($rootScope, $http, $localStorage) {
+        if ($localStorage.aprilMarketCurrentUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.aprilMarketCurrentUser.token;
+        }
+    }
+})();
+
+angular.module('app').controller('indexController', function ($scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8189/market';
 
-    $scope.init = function () {
-        $http.get(contextPath + '/api/v1/products')
-            .then(function (response) {
-                $scope.products = response.data;
-            });
-    };
-
-    $scope.createNewProduct = function () {
-        $http.post(contextPath + '/api/v1/products', $scope.newProduct)
+    $scope.tryToAuth = function () {
+        $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
-                $scope.init();
-                $scope.newProduct = null;
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.currentUser = {username: $scope.user.username, token: response.data.token};
+
+                    $scope.currentUserName = $scope.user.username;
+
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
             }, function errorCallback(response) {
-                console.log(response.data);
-                alert('Error: ' + response.data.messages);
             });
     };
 
-    $scope.clickOnProduct = function (product) {
-        console.log(product);
-    }
+    $scope.tryToAuth = function () {
+        $http.post(contextPath + '/auth', $scope.user)
+            .then(function successCallback(response) {
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.aprilMarketCurrentUser = {username: $scope.user.username, token: response.data.token};
 
-    $scope.pingProduct = function (productId) {
-        $http({
-            url: contextPath + '/api/v1/cart/ping',
-            method: 'GET',
-            params: {
-                id: productId,
-                temp: 'empty'
-            }
-        }).then(function (response) {
-            console.log("OK");
-        });
-    }
-
-    $scope.clear = function () {
-        $scope.searchAll = null;
-    };
-
-    $scope.addProductToCart = function () {
-        $http.post(contextPath + '/api/v1/cart/add')
-            .then(function (response) {
-                $scope.cartproducts = response.data;
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
+            }, function errorCallback(response) {
             });
     };
 
+    $scope.tryToLogout = function () {
+        $scope.clearUser();
+    };
 
-    $scope.init();
+    $scope.clearUser = function () {
+        delete $localStorage.aprilMarketCurrentUser;
+        $http.defaults.headers.common.Authorization = '';
+    };
 
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.aprilMarketCurrentUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 });
